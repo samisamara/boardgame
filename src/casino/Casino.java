@@ -75,6 +75,7 @@ public class Casino {
                     break;
                 case 5:
                     help();
+                    break;
             }
 
         }
