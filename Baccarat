@@ -1,78 +1,4 @@
-package casino;
-
-import java.util.Scanner;
-
-public class Casino 
-{
-    public static void main(String[] args) 
-    {
-        // TODO code application logic here
-        Scanner scnr = new Scanner(System.in);
-        Double money;
-        System.out.println("Hello Welcome to Casino Night!");
-        
-        System.out.println("Here is a list of available games");
-        //List of games
-        String[] games = {"Blackjack", "Baccarat", "Cee-lo"};
-        for (int i = 0; i < games.length; i++) 
-        {
-            System.out.println("-" + games[i]);
-        }
-        System.out.println("");
-        
-        //Player enters how much money they would like to start with 
-        //made money a double just so we can ask for whole number if they do not provide one.
-        System.out.println("Enter amount of money you would like to start with: ");
-        money = scnr.nextDouble();
-        while (money % 1 != 0) 
-        {
-            System.out.println("Enter whole number");
-            money = scnr.nextDouble();
-        }
-        
-        System.out.println("Money: $" + money);
-        
-        boolean quit = false ;
-        while(quit == false)
-        {
-            System.out.println("Please choose a game:");
-            System.out.println(">1. [ Blackjack ]");
-            System.out.println(">2. [ Baccarat ]");
-            System.out.println(">3. [ Cee-lo ]");
-            System.out.println(">4. [ Quit Game ]");
-            
-            //Player selection
-            Scanner reader = new Scanner(System.in);
-            int chooseGame = reader.nextInt();
-            
-                //loop until a valid selection is entered
-                while(chooseGame < 1 || chooseGame > 4)
-                {
-                    System.out.println("Invalid selection, please re-enter.");
-                    chooseGame = reader.nextInt();
-                }
-                
-            //Choose game or quit
-            switch(chooseGame)
-            {
-                case 1:
-                    
-                    break;
-                case 2:
-                    baccarat(money); //Play baccarat using current Money
-                    break;
-                case 3:
-                    
-                    break;
-                case 4:
-                    quit = true ; //Exit program
-                    break;
-            }
-        }
-
-    }
-    
-    public static void baccarat(Double money) 
+public static void baccarat(Double money) 
     {
         //Intro
         System.out.println("Welcome to Baccarat!");
@@ -85,24 +11,42 @@ public class Casino
             //Options: Play the game or go to Menu
             System.out.println("Please select an option: ");
             System.out.println("> 1. Place a bet");
-            System.out.println("> 2. Go back to the Menu");
+            System.out.println("> 2. Baccarat Description");
+            System.out.println("> 3. Go back to the Menu");
 
             //Player selection
             Scanner reader = new Scanner(System.in);
             int selection = reader.nextInt();
                 //keep player in loop until a valid selection is made
-                while((selection != 1) && (selection != 2))
+                while((selection != 1) && (selection != 2) && (selection != 3))
                 {
                     System.out.println("Please enter a valid selection.");
                     System.out.println("> 1. Place a bet");
-                    System.out.println("> 2. Go back to the Menu");
+                    System.out.println("> 2. Baccarat Description");
+                    System.out.println("> 3. Go back to the Menu");
                     selection = reader.nextInt();
                 }
             
             //Quitting Baccarat
-            if(selection == 2)
+            if(selection == 3)
             {
                 playingBaccarat = false ;
+            }
+            
+            //Baccarat Description
+            if(selection == 2)
+            {
+                System.out.println("Baccarat is a game about betting on cards that will be dealt.");
+                System.out.println("The dealer will deal cards to two different sides: the 'Player' and the 'Banker'.");
+                System.out.println("The side with the highest value wins. If the value reaches ten, the values loops back down to zero. Card draws are interdependent based on what each side draws");
+                System.out.println("Both sides draw two cards by default.");
+                System.out.println("The Player side will draw a third card if their total is less than 6. The Banker will draw a third card if their total is less than 7 and depending on what the Player side drew.");
+                System.out.println("You may select your bet size and what you bet will win: Player, Banker, or Tie.");
+                
+                    System.out.println("> 1. Place a bet");
+                    System.out.println("> 2. Baccarat Description");
+                    System.out.println("> 3. Go back to the Menu");
+                    selection = reader.nextInt();
             }
 
             //Choose bet size and what to bet on
@@ -153,7 +97,8 @@ public class Casino
                 String bankerHand = "";
 
                 //PLAYER Cards
-                for(int i = 0; i < 2; i++)
+                int lastPlayerCardValue = -1 ; //necessary to keep track of this because the Banker side changes based on it. (negative 1 for now, in case the player does not need a 3rd card)
+                for(int i = 0; i < 2; i++)//Initial two cards drawn
                 {
                     //Draw a random card and get the baccarat value added to it
                     String cardDrawn = cardDraw();
@@ -165,7 +110,20 @@ public class Casino
                         playerTotal -= 10;
                     }
                 }
-                System.out.println("PLAYER: " + playerHand);
+                if(playerTotal < 6) //Player side will draw an extra card if below 6
+                {
+                    //Draw a random card and get the baccarat value added to it
+                    String cardDrawn = cardDraw();
+                    playerHand += cardDrawn ; //add cardDrawn to playerHand
+                    playerTotal += baccaratValues(cardDrawn); //add the value to player total
+                    lastPlayerCardValue = baccaratValues(cardDrawn); //set the last card
+
+                    while(playerTotal >= 10)//in baccarat, when you hit 10 you loop back down to 0
+                    {
+                        playerTotal -= 10;
+                    }
+                }
+                System.out.println("PLAYER: " + playerHand);//output Player value at the end
 
                 //BANKER Cards
                 for(int i = 0; i < 2; i++)
@@ -180,6 +138,114 @@ public class Casino
                         bankerTotal -= 10;
                     }
                 }
+                
+                while(lastPlayerCardValue != -1) //Banker only gets another card if the Player side took one
+                {
+                    //Banker's own total effects whether or not you draw as well
+                    if(bankerTotal == 0)
+                    {
+                        //Draw a random card and get the baccarat value added to it
+                        String cardDrawn = cardDraw();
+                        bankerHand += cardDrawn ; //add cardDrawn to bankerHand
+                        bankerTotal += baccaratValues(cardDrawn); //add the value to banker total
+
+                        while(bankerTotal >= 10)//in baccarat, when you hit 10 you loop back down to 0
+                        {
+                            bankerTotal -= 10;
+                        }
+                        
+                        break;
+                    }
+                    else if(bankerTotal == 1)
+                    {
+                        //Draw a random card and get the baccarat value added to it
+                        String cardDrawn = cardDraw();
+                        bankerHand += cardDrawn ; //add cardDrawn to bankerHand
+                        bankerTotal += baccaratValues(cardDrawn); //add the value to banker total
+
+                        while(bankerTotal >= 10)//in baccarat, when you hit 10 you loop back down to 0
+                        {
+                            bankerTotal -= 10;
+                        }
+                        
+                        break;
+                    }
+                    else if(bankerTotal == 2)
+                    {
+                        //Draw a random card and get the baccarat value added to it
+                        String cardDrawn = cardDraw();
+                        bankerHand += cardDrawn ; //add cardDrawn to bankerHand
+                        bankerTotal += baccaratValues(cardDrawn); //add the value to banker total
+
+                        while(bankerTotal >= 10)//in baccarat, when you hit 10 you loop back down to 0
+                        {
+                            bankerTotal -= 10;
+                        }
+                        
+                        break;
+                    }
+                    else if(bankerTotal == 3 && lastPlayerCardValue != 8)//only draw if Banker is 3 and lastPlayerCard drawn is not 8
+                    {
+                        //Draw a random card and get the baccarat value added to it
+                        String cardDrawn = cardDraw();
+                        bankerHand += cardDrawn ; //add cardDrawn to bankerHand
+                        bankerTotal += baccaratValues(cardDrawn); //add the value to banker total
+
+                        while(bankerTotal >= 10)//in baccarat, when you hit 10 you loop back down to 0
+                        {
+                            bankerTotal -= 10;
+                        }
+                        
+                        break;
+                    }
+                    else if(bankerTotal == 4 && (lastPlayerCardValue >= 2 && lastPlayerCardValue <= 7))
+                    {
+                        //Draw a random card and get the baccarat value added to it
+                        String cardDrawn = cardDraw();
+                        bankerHand += cardDrawn ; //add cardDrawn to bankerHand
+                        bankerTotal += baccaratValues(cardDrawn); //add the value to banker total
+
+                        while(bankerTotal >= 10)//in baccarat, when you hit 10 you loop back down to 0
+                        {
+                            bankerTotal -= 10;
+                        }
+                        
+                        break;
+                    }
+                    else if(bankerTotal == 5 && (lastPlayerCardValue >= 4 && lastPlayerCardValue <= 7))
+                    {
+                        //Draw a random card and get the baccarat value added to it
+                        String cardDrawn = cardDraw();
+                        bankerHand += cardDrawn ; //add cardDrawn to bankerHand
+                        bankerTotal += baccaratValues(cardDrawn); //add the value to banker total
+
+                        while(bankerTotal >= 10)//in baccarat, when you hit 10 you loop back down to 0
+                        {
+                            bankerTotal -= 10;
+                        }
+                        
+                        break;
+                    }
+                    else if(bankerTotal == 6 && (lastPlayerCardValue >= 6 && lastPlayerCardValue <= 7))
+                    {
+                        //Draw a random card and get the baccarat value added to it
+                        String cardDrawn = cardDraw();
+                        bankerHand += cardDrawn ; //add cardDrawn to bankerHand
+                        bankerTotal += baccaratValues(cardDrawn); //add the value to banker total
+
+                        while(bankerTotal >= 10)//in baccarat, when you hit 10 you loop back down to 0
+                        {
+                            bankerTotal -= 10;
+                        }
+                        
+                        break;
+                    }
+                    else //don't draw if Banker total is 7 or more, or if no other values cause a draw
+                    {
+                        break;
+                    }
+                }
+                
                 System.out.println("BANKER: " + bankerHand);
 
                 //COMPARE and do Payout
@@ -336,5 +402,3 @@ public class Casino
         
         return value;
     }
-    
-}
