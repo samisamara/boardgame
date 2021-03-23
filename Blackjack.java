@@ -68,10 +68,10 @@ public class Blackjack {
             switch(chooseGame)
             {
                 case 1:
-                      blackjack(money);
+                    money = blackjack(money);
                     break;
                 case 2:
-//                    baccarat(money); //Play baccarat using current Money
+                    baccarat(money); //Play baccarat using current Money
                     break;
                 case 3:
 
@@ -134,11 +134,14 @@ public class Blackjack {
             }
         } while (!(select==1));
         
-        
         //declares values
         int playerTotal = 0;
         int numCard = 0;
+        int dealer = 0;
         Random rn = new Random();
+        for (int i=0; i<2; i++) {
+            dealer = getDealerCard(dealer);
+        }
         //for loop to recieve two cards
         for (int i=0; i<2; i++){
             playerTotal = getCard(playerTotal, scnr);
@@ -148,7 +151,8 @@ public class Blackjack {
         Character option;
         //this loop plays until player chooses no, reaches 21, or busts
         do {
-        System.out.println("You have recieved " + numCard + " cards. Your current total is " + playerTotal + ". Would you like another card?");
+        System.out.println("You have recieved " + numCard + " cards. Your current total is " + playerTotal + ".");
+        System.out.println("The dealer's total is " + dealer + ". Would you like another card?");
         System.out.println("Select \"Y\" for yes, or \"N\" for no");
         option = scnr.next().charAt(0);
         option = Character.toUpperCase(option);
@@ -159,12 +163,15 @@ public class Blackjack {
                 option = Character.toUpperCase(option);
         }
         if (option.equals('Y')) {
+            if (dealer < 17) {
+                dealer = getDealerCard(dealer);
+            }
             playerTotal = getCard(playerTotal, scnr);
             numCard++;
         }
-        } while (playerTotal <= 20 && option.equals('Y'));
+        } while (playerTotal <= 20 && option.equals('Y') && dealer <= 21);
         System.out.println(playerTotal);
-        money = check(playerTotal, money, bet);
+        money = check(playerTotal, money, bet, dealer);
         
         return money;
     }
@@ -211,33 +218,332 @@ public class Blackjack {
         return card;
     }
     
+    public static int getDealerCard(int dealer) {
+        Random rn = new Random();
+        int card = rn.nextInt(13)+1;
+        if (card > 10) {
+            card = 10;
+        }
+        if (card == 1) {
+            if ((dealer + card) > 21) {
+                card = 1;
+            }
+            else {
+                card = 11;
+            }
+        }
+        return (dealer + card);
+    }
+    
     //checks if thr player won or bust
-    public static double check(int player, double money, int bet) {
-        if (player <= 20) {
+    public static double check(int player, double money, int bet, int dealer) {
+        if (dealer > 21) {
+            System.out.println("Dealer busts...You win!");
+            System.out.println("Total money before playing: $" + money);
+            System.out.println("Your bet: " + bet);
+            System.out.println("You've earned your bet");
+            money = money + bet;
+            System.out.println("Total money after playing: $" + money);  
+        }
+        if ((player <= 20) && (player > dealer)) {
             System.out.println("You win!");
             System.out.println("Total money before playing: $" + money);
             System.out.println("Your bet: " + bet);
-            System.out.println("You've earned 2x your bet");
-            money = money + (bet*2);
+            System.out.println("You've earned your bet");
+            money = money + bet;
             System.out.println("Total money after playing: $" + money);
         }
         if (player > 21) {
             System.out.println("Player bust. You lose");
             System.out.println("Total money before playing: $" + money);
             System.out.println("Your bet: " + bet);
-            System.out.println("You've lost 2x your bet");
-            money = money - (bet*2);
+            System.out.println("You've lost your bet");
+            money = money - bet;
+            System.out.println("Total money after playing: $" + money);
+        }
+        if ((player < 21) && (dealer > player) && (dealer < 21)) {
+            System.out.println("Dealer's value was greater. You lose");
+            System.out.println("Total money before playing: $" + money);
+            System.out.println("Your bet: " + bet);
+            System.out.println("You've lost your bet");
+            money = money - bet;
             System.out.println("Total money after playing: $" + money);
         }
         if (player == 21) {
             System.out.println("You win!");
             System.out.println("Total money before playing: $" + money);
             System.out.println("Your bet: " + bet);
-            System.out.println("You've earned 2x your bet");
-            money = money + (bet*2);
+            System.out.println("You've earned your bet");
+            money = money + bet;
             System.out.println("Total money after playing: $" + money);
         }
         return money;
+    }
+    
+    
+    public static void baccarat(Double money) 
+    {
+        //Intro
+        System.out.println("Welcome to Baccarat!");
+
+        boolean playingBaccarat = true;
+        while(playingBaccarat == true)
+        {
+            System.out.println("Current Money: $" + money);
+
+            //Options: Play the game or go to Menu
+            System.out.println("Please select an option: ");
+            System.out.println("> 1. Place a bet");
+            System.out.println("> 2. Go back to the Menu");
+
+            //Player selection
+            Scanner reader = new Scanner(System.in);
+            int selection = reader.nextInt();
+                //keep player in loop until a valid selection is made
+                while((selection != 1) && (selection != 2))
+                {
+                    System.out.println("Please enter a valid selection.");
+                    System.out.println("> 1. Place a bet");
+                    System.out.println("> 2. Go back to the Menu");
+                    selection = reader.nextInt();
+                }
+
+            //Quitting Baccarat
+            if(selection == 2)
+            {
+                playingBaccarat = false ;
+            }
+
+            //Choose bet size and what to bet on
+            while(selection == 1)
+            {
+                //Choose bet size
+                System.out.println("Enter how much you would like to bet: ");
+                int betSize = reader.nextInt();
+                //Choose who to bet on
+                System.out.println("What would you like to bet on?: ");
+                System.out.println(">1. PLAYER");
+                System.out.println(">2. BANKER");
+                System.out.println(">3. TIE (8x Payout)");
+                int betChoice = reader.nextInt();
+
+                    //keep player in loop until a valid selection is made
+                    while((betChoice < 1) || (betChoice > 3))
+                    {
+                        System.out.println("Please choose a valid bet choice.");
+                        System.out.println(">1. PLAYER");
+                        System.out.println(">2. BANKER");
+                        System.out.println(">3. TIE (8x Payout)");
+                        betChoice = reader.nextInt();
+                    }
+
+                    //set name of betChoice based on player input
+                    String betChoiceName = "";
+                    switch(betChoice)
+                    {
+                        case 1:
+                            betChoiceName = "PLAYER" ;
+                            break;
+                        case 2:
+                            betChoiceName = "BANKER" ;
+                            break;
+                        case 3:
+                            betChoiceName = "TIE" ;
+                            break;
+                    }
+
+                //Announce Player's decisions, then proceed to Dealing the cards
+                System.out.println("You have bet $" + betSize + " on " + betChoiceName);
+
+                //DEAL CARDS
+                int playerTotal = 0;
+                String playerHand = "";
+                int bankerTotal = 0;
+                String bankerHand = "";
+
+                //PLAYER Cards
+                for(int i = 0; i < 2; i++)
+                {
+                    //Draw a random card and get the baccarat value added to it
+                    String cardDrawn = cardDraw();
+                    playerHand += cardDrawn ; //add cardDrawn to playerHand
+                    playerTotal += baccaratValues(cardDrawn); //add the value to player total
+
+                    while(playerTotal >= 10)//in baccarat, when you hit 10 you loop back down to 0
+                    {
+                        playerTotal -= 10;
+                    }
+                }
+                System.out.println("PLAYER: " + playerHand);
+
+                //BANKER Cards
+                for(int i = 0; i < 2; i++)
+                {
+                    //Draw a random card and get the baccarat value added to it
+                    String cardDrawn = cardDraw();
+                    bankerHand += cardDrawn ; //add cardDrawn to bankerHand
+                    bankerTotal += baccaratValues(cardDrawn); //add the value to banker total
+
+                    while(bankerTotal >= 10)//in baccarat, when you hit 10 you loop back down to 0
+                    {
+                        bankerTotal -= 10;
+                    }
+                }
+                System.out.println("BANKER: " + bankerHand);
+
+                //COMPARE and do Payout
+                System.out.println("[PLAYER: " + playerTotal + "] || [BANKER: " + bankerTotal + "]");
+
+                if(playerTotal > bankerTotal)
+                {
+                    if(betChoice == 1)
+                    {
+                        System.out.println("You won! You gain $" + betSize);
+                        money += betSize ;
+                    }
+                    else
+                    {
+                        System.out.println("You lost! You lost $" + betSize);
+                        money -= betSize ;
+                    }
+                }
+                if(playerTotal < bankerTotal)
+                {
+                    if(betChoice == 2)
+                    {
+                        System.out.println("You won! You gain $" + betSize);
+                        money += betSize ;
+                    }
+                    else
+                    {
+                        System.out.println("You lost! You lost $" + betSize);
+                        money -= betSize ;
+                    }
+                }
+                if(playerTotal == bankerTotal)
+                {
+                    if(betChoice == 3)
+                    {
+                        System.out.println("You won! You gain $" + (8 * betSize));
+                        money += (8 * betSize) ;
+                    }
+                    else
+                    {
+                        System.out.println("You lost! You lost $" + betSize);
+                        money -= betSize ;
+                    }
+                }
+
+            break;
+            }
+
+        }
+    }
+
+    public static String cardDraw()
+    {
+        //Set min to max (1-13 is Ace thru King)
+        int min = 1;
+        int max = 13;
+        int cardNum = (int)(Math.random() * (max - min + 1) + min);
+
+        //initialize the card variable
+        String card = "";
+
+        //Take that random value and apply the card type
+        switch(cardNum)
+        {
+            case 1: 
+                card = "A";
+                break;
+            case 2: 
+                card = "2";
+                break;
+            case 3: 
+                card = "3";
+                break;
+            case 4: 
+                card = "4";
+                break;
+            case 5: 
+                card = "5";
+                break;
+            case 6: 
+                card = "6";
+                break;
+            case 7: 
+                card = "7";
+                break;
+            case 8: 
+                card = "8";
+                break;
+            case 9: 
+                card = "9";
+                break;
+            case 10: 
+                card = "10";
+                break;
+            case 11: 
+                card = "J";
+                break;
+            case 12: 
+                card = "Q";
+                break;
+            case 13: 
+                card = "K";
+                break;
+        }
+
+        return card;
+    }
+
+    public static int baccaratValues(String card)
+    {
+        int value = 0;
+        switch(card)
+        {
+            case "A": 
+                value = 1;
+                break;
+            case "2": 
+                value = 2;
+                break;
+            case "3": 
+                value = 3;
+                break;
+            case "4": 
+                value = 4;
+                break;
+            case "5": 
+                value = 5;
+                break;
+            case "6": 
+                value = 6;
+                break;
+            case "7": 
+                value = 7;
+                break;
+            case "8": 
+                value = 8;
+                break;
+            case "9": 
+                value = 9;
+                break;
+            case "10": 
+                value = 0;
+                break;
+            case "J": 
+                value = 0;
+                break;
+            case "Q": 
+                value = 0;
+                break;
+            case "K": 
+                value = 0;
+                break;
+        }
+
+        return value;
     }
     
 }
