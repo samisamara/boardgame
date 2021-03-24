@@ -16,7 +16,7 @@ public class Casino {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+      public static void main(String[] args) {
         // TODO code application logic here
         Scanner scnr = new Scanner(System.in);
         Double money;
@@ -24,7 +24,7 @@ public class Casino {
 
         System.out.println("Here is a list of available games");
         //List of games
-        String[] games = {"Blackjack", "Baccarat", "Cee-lo"};
+        String[] games = {"Blackjack", "Baccarat", "Cee-lo","Craps"};
         for (int i = 0; i < games.length; i++) {
             System.out.println("-" + games[i]);
         }
@@ -40,21 +40,22 @@ public class Casino {
         }
 
         System.out.println("Money: $" + money);
-        //player chooses game with number associated with game
+
         boolean quit = false;
         while (quit == false) {
             System.out.println("Please choose a game:");
             System.out.println(">1. [ Blackjack ]");
             System.out.println(">2. [ Baccarat ]");
             System.out.println(">3. [ Cee-lo ]");
-            System.out.println(">4. [ Quit Game ]");
+            System.out.println(">4. [ Craps ]");
             System.out.println(">5. [ Help ]");
+            System.out.println(">6. [ Quit Game ]");
             //Player selection
             Scanner reader = new Scanner(System.in);
             int chooseGame = reader.nextInt();
 
             //loop until a valid selection is entered
-            while (chooseGame < 1 || chooseGame > 5) {
+            while (chooseGame < 1 || chooseGame > 6) {
                 System.out.println("Invalid selection, please re-enter.");
                 chooseGame = reader.nextInt();
             }
@@ -71,10 +72,13 @@ public class Casino {
 
                     break;
                 case 4:
-                    quit = true; //Exit program
+                    craps(money);
                     break;
                 case 5:
                     help();
+                    break;
+                case 6:
+                    quit = true; //Exit program
                     break;
             }
 
@@ -83,7 +87,6 @@ public class Casino {
     }
 
     public static void help() {
-        //player enters number associated with game to choose game they need help understanding
         System.out.println("Enter game you need help with:");
         boolean quit = false;
         while (quit == false) {
@@ -91,14 +94,15 @@ public class Casino {
             System.out.println(">1. [ Blackjack ]");
             System.out.println(">2. [ Baccarat ]");
             System.out.println(">3. [ Cee-lo ]");
-            System.out.println(">4. [ Quit help ]");
+            System.out.println(">4. [ Craps ]");
+            System.out.println(">5. [ Quit help ]");
 
             //Player selection
             Scanner reader = new Scanner(System.in);
             int chooseGame = reader.nextInt();
 
             //loop until a valid selection is entered
-            while (chooseGame < 1 || chooseGame > 4) {
+            while (chooseGame < 1 || chooseGame > 5) {
                 System.out.println("Invalid selection, please re-enter.");
                 chooseGame = reader.nextInt();
             }
@@ -125,6 +129,9 @@ public class Casino {
 
                     break;
                 case 4:
+                    System.out.println("");
+                    break;
+                case 5:
                     quit = true; //Exit program
                     break;
             }
