@@ -45,7 +45,7 @@ public static void baccarat(Double money)
                 
                     System.out.println("> 1. Place a bet");
                     System.out.println("> 2. Baccarat Description");
-                    System.out.println("> 3. Go back to the Menu");
+                    System.out.println("> 3. Go back");
                     selection = reader.nextInt();
             }
 
@@ -55,6 +55,14 @@ public static void baccarat(Double money)
                 //Choose bet size
                 System.out.println("Enter how much you would like to bet: ");
                 int betSize = reader.nextInt();
+                
+                //check if you have the funds
+                if(betSize > money)
+                {
+                    System.out.println("You do not have enough money for that bet.");
+                    break;
+                }
+                
                 //Choose who to bet on
                 System.out.println("What would you like to bet on?: ");
                 System.out.println(">1. PLAYER");
