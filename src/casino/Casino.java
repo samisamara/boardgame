@@ -129,7 +129,11 @@ public class Casino {
 
                     break;
                 case 4:
-                    System.out.println("");
+                     System.out.println("Simplified Craps\n"
+                            + "There are dozens of variations of standard craps.\n" + ""
+                            + "This variant, , is a wonderful game to start with for the beginner gambler.\n"
+                            + "In this game a player simply wins if she throws 2, 3, 4, 10, 11 or 12\n"
+                            + "and loses if they roll 5, 6, 7, 8 or 9.");
                     break;
                 case 5:
                     quit = true; //Exit program
