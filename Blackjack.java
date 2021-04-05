@@ -162,6 +162,7 @@ public class Blackjack {
                 option = scnr.next().charAt(0);
                 option = Character.toUpperCase(option);
         }
+        // if the dealer has a total less than 17, get new card
         if (option.equals('Y')) {
             if (dealer < 17) {
                 dealer = getDealerCard(dealer);
@@ -169,6 +170,7 @@ public class Blackjack {
             playerTotal = getCard(playerTotal, scnr);
             numCard++;
         }
+        //option of whether the player wants to keep going or not
         } while (playerTotal <= 20 && option.equals('Y') && dealer <= 21);
         System.out.println(playerTotal);
         money = check(playerTotal, money, bet, dealer);
@@ -178,6 +180,7 @@ public class Blackjack {
     
     //this method gives you a card of a random value in blackjack
     public static int getCard(int playerTotal, Scanner scnr) {
+        //randomly picks a number from 1-13 and then sends number to method to assign value
         Random rn = new Random();
         int card = rn.nextInt(13)+1;
         //sends card to additional method to fix card value due to rules of blackjack
@@ -188,6 +191,7 @@ public class Blackjack {
     
     //this method alters the card value in coordination with the rules of blackjack
     public static int cardValue(int card, Scanner scnr){
+        //assigns a card value based on the number
         if (card >= 10) {
             switch (card) {
                 case 11:
@@ -219,6 +223,7 @@ public class Blackjack {
     }
     
     public static int getDealerCard(int dealer) {
+        //gives the dealer a card and adds to dealer's total
         Random rn = new Random();
         int card = rn.nextInt(13)+1;
         if (card > 10) {
@@ -237,6 +242,7 @@ public class Blackjack {
     
     //checks if thr player won or bust
     public static double check(int player, double money, int bet, int dealer) {
+        // this if statement only functions when the dealer busts
         if (dealer > 21) {
             System.out.println("Dealer busts...You win!");
             System.out.println("Total money before playing: $" + money);
@@ -245,6 +251,7 @@ public class Blackjack {
             money = money + bet;
             System.out.println("Total money after playing: $" + money);  
         }
+        // this if statement only functions when the player beats the dealer normally
         if ((player <= 20) && (player > dealer)) {
             System.out.println("You win!");
             System.out.println("Total money before playing: $" + money);
@@ -253,6 +260,7 @@ public class Blackjack {
             money = money + bet;
             System.out.println("Total money after playing: $" + money);
         }
+        // this if statement only functions when the player busts
         if (player > 21) {
             System.out.println("Player bust. You lose");
             System.out.println("Total money before playing: $" + money);
@@ -261,6 +269,7 @@ public class Blackjack {
             money = money - bet;
             System.out.println("Total money after playing: $" + money);
         }
+        // this if statement only functions when the player beats the dealer normally
         if ((player < 21) && (dealer > player) && (dealer < 21)) {
             System.out.println("Dealer's value was greater. You lose");
             System.out.println("Total money before playing: $" + money);
@@ -269,6 +278,7 @@ public class Blackjack {
             money = money - bet;
             System.out.println("Total money after playing: $" + money);
         }
+        // this if statement only functions when the player gets 21 exactly
         if (player == 21) {
             System.out.println("You win!");
             System.out.println("Total money before playing: $" + money);
