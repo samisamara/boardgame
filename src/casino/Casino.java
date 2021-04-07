@@ -16,7 +16,7 @@ public class Casino {
     /**
      * @param args the command line arguments
      */
-      public static void main(String[] args) {
+     public static void main(String[] args) {
         // TODO code application logic here
         Scanner scnr = new Scanner(System.in);
         Double money;
@@ -24,7 +24,7 @@ public class Casino {
 
         System.out.println("Here is a list of available games");
         //List of games
-        String[] games = {"Blackjack", "Baccarat", "Cee-lo","Craps"};
+        String[] games = {"Blackjack", "Baccarat", "Cee-lo", "Craps"};
         for (int i = 0; i < games.length; i++) {
             System.out.println("-" + games[i]);
         }
@@ -34,15 +34,15 @@ public class Casino {
         //made money a double just so we can ask for whole number if they do not provide one.
         System.out.println("Enter amount of money you would like to start with: ");
         money = scnr.nextDouble();
-        while (money % 1 != 0) {
-            System.out.println("Enter whole number");
+        while (money <= 0) {
+            System.out.println("Enter positive number");
             money = scnr.nextDouble();
         }
 
         System.out.println("Money: $" + money);
 
         boolean quit = false;
-        while (quit == false) {
+        while (quit == false || money<=0) {
             System.out.println("Please choose a game:");
             System.out.println(">1. [ Blackjack ]");
             System.out.println(">2. [ Baccarat ]");
@@ -129,7 +129,7 @@ public class Casino {
 
                     break;
                 case 4:
-                     System.out.println("Simplified Craps\n"
+                    System.out.println("Simplified Craps\n"
                             + "There are dozens of variations of standard craps.\n" + ""
                             + "This variant, , is a wonderful game to start with for the beginner gambler.\n"
                             + "In this game a player simply wins if she throws 2, 3, 4, 10, 11 or 12\n"
