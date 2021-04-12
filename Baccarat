@@ -36,12 +36,12 @@ public static void baccarat(Double money)
             //Baccarat Description
             if(selection == 2)
             {
-                System.out.println("Baccarat is a game about betting on cards that will be dealt.");
-                System.out.println("The dealer will deal cards to two different sides: the 'Player' and the 'Banker'.");
-                System.out.println("The side with the highest value wins. If the value reaches ten, the values loops back down to zero. Card draws are interdependent based on what each side draws");
-                System.out.println("Both sides draw two cards by default.");
-                System.out.println("The Player side will draw a third card if their total is less than 6. The Banker will draw a third card if their total is less than 7 and depending on what the Player side drew.");
-                System.out.println("You may select your bet size and what you bet will win: Player, Banker, or Tie.");
+                System.out.println("Baccarat is a game about betting on cards that will be dealt.\n"
+                            + "The dealer will deal cards to two different sides: the 'Player' and the 'Banker'.\n"
+                            + "The side with the highest value wins. If the value reaches ten, the values loops back down to zero. Card draws are interdependent based on what each side draws.\n"
+                            + "Both sides draw two cards by default.\n"
+                            + "The Player side will draw a third card if their total is less than 6. The Banker will draw a third card if their total is less than 7 and depending on what the Player side drew.\n"
+                            + "You may select your bet size and what you bet will win: Player, Banker, or Tie.\n");
                 
                     System.out.println("> 1. Place a bet");
                     System.out.println("> 2. Baccarat Description");
