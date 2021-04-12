@@ -1,23 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package casino;
-
-import java.util.Scanner;
-
-/**
- *
- * @author David
- */
-public class Casino {
-
-    /**
-     * @param args the command line arguments
-     */
-     public static void main(String[] args) {
-        // TODO code application logic here
+public static void main(String[] args) {
+        
         Scanner scnr = new Scanner(System.in);
         Double money;
         System.out.println("Hello Welcome to Casino Night!");
@@ -31,7 +13,7 @@ public class Casino {
         System.out.println("");
 
         //Player enters how much money they would like to start with 
-        //made money a double just so we can ask for whole number if they do not provide one.
+       
         System.out.println("Enter amount of money you would like to start with: ");
         money = scnr.nextDouble();
         while (money <= 0) {
@@ -63,16 +45,16 @@ public class Casino {
             //Choose game or quit
             switch (chooseGame) {
                 case 1:
-
+                    //blackjack(money);
                     break;
                 case 2:
-                    //baccarat(money); //Play baccarat using current Money
+                    baccarat(money); //Play baccarat using current Money
                     break;
                 case 3:
-
+                    //ceelo(money);
                     break;
                 case 4:
-                    craps(money);
+                    //craps(money);
                     break;
                 case 5:
                     help();
@@ -110,7 +92,8 @@ public class Casino {
             //Choose game or quit
             switch (chooseGame) {
                 case 1:
-                    System.out.println("The goal of blackjack is to beat the dealer's hand without going over 21.\n"
+                    System.out.println("Blackjack\n"
+                            + "The goal of blackjack is to beat the dealer's hand without going over 21.\n"
                             + "Face cards are worth 10. Aces are worth 1 or 11, whichever makes a better hand.\n"
                             + "Each player starts with two cards, one of the dealer's cards is hidden until the end.\n"
                             + "To 'Hit' is to ask for another card. To 'Stand' is to hold your total and end your turn.\n"
@@ -120,13 +103,19 @@ public class Casino {
                             + "Dealer will hit until his/her cards total 17 or higher.");
                     break;
                 case 2:
-                    System.out.println("If either the player or banker is dealt a total of eight or nine, both the player and banker stand.\n"
+                    System.out.println("Baccarat\n"
+                            + "If either the player or banker is dealt a total of eight or nine, both the player and banker stand.\n"
                             + "If the player’s total is five or less, then the player will receive another card. Otherwise, the player will stand.\n"
                             + "If the player stands, then the banker hits on a total of 5 or less.\n"
                             + "The final betting option, a tie, pays out 8-to-1. Conveniently, there are also sheets at the table for you to keep track of your score.");
                     break;
                 case 3:
-
+                    System.out.println("Ceelo\n"
+                            + "The player and dealer both rolls three dice.\n"
+                            + "The goal is to roll a 'hand', which is typically composed of a pair and an outlier.\n"
+                            + "There are also some special rolls with special effects like 1-2-3 or 4-5-6, or even a set.\n"
+                            + "The player and dealer's rolls are compared and the winner is the one with the higher value hand.");
+                    
                     break;
                 case 4:
                     System.out.println("Simplified Craps\n"
@@ -143,6 +132,4 @@ public class Casino {
         }
 
     }
-
-}
 
