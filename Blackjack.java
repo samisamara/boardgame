@@ -52,16 +52,16 @@ public class Casino
             //Choose game or quit
             switch (chooseGame) {
                 case 1:
-                    blackjack(money);
+                    money = blackjack(money);
                     break;
                 case 2:
-                    baccarat(money); //Play baccarat using current Money
+                    money = baccarat(money);
                     break;
                 case 3:
-                    Ceelo(money);
+                    money = Ceelo(money);
                     break;
                 case 4:
-                    craps(money);
+                    money = craps(money);
                     break;
                 case 5:
                     help();
@@ -137,7 +137,7 @@ public class Casino
 
     }
     
-    public static void baccarat(Double money) 
+    public static Double baccarat(Double money) 
     {
         //Intro
         System.out.println("Welcome to Baccarat!");
@@ -442,6 +442,8 @@ public class Casino
             }
 
         }
+        
+        return money ;
     }
     
     public static String cardDraw()
@@ -642,6 +644,7 @@ public class Casino
         System.out.println(playerTotal);
         money = check(playerTotal, money, bet, dealer);
         
+        //blackjack(money);
         return money;
     }
     
@@ -891,7 +894,7 @@ public class Casino
         return mon;
     }
     
-    public static void Ceelo(Double money){
+    public static Double Ceelo(Double money){
         Scanner scnr = new Scanner(System.in);
         Random rnd = new Random();
         int bet = 0;
@@ -900,7 +903,7 @@ public class Casino
         
         do{
             //home page 
-            System.out.print("Welcome to Cee-lo! Please select one of the following options:");
+            System.out.println("Welcome to Cee-lo! Please select one of the following options:");
             System.out.println("> 1. Play a game");
             System.out.println("> 2. View rules");
             System.out.println("> 3. Back to menu");
@@ -910,11 +913,11 @@ public class Casino
             if(option == 1){
                 System.out.println("Total Money: " + money);
                 System.out.println("Place your bet");
-                scnr.nextInt();
+                bet = scnr.nextInt();
                 while(bet > money || bet < 1){
                     System.out.println("Invalid  Value. Select a value greater than one and less than or equal to your total money");
                     System.out.println("Total Money: " + money);
-                    scnr.nextInt();
+                    bet = scnr.nextInt();
                 }
                 canPlay = true;
             }
@@ -935,7 +938,7 @@ public class Casino
                 System.out.println();
             }
             else if(option == 3){
-                return;
+                return money;
             }
             else{
                 System.out.println("Error: Invalid Input. Please select one of the following options:");
@@ -1006,16 +1009,36 @@ public class Casino
         }
         
         //results
+        if(DealerValue == 0){
+            System.out.println("Dealer busts!");
+        }
+        else{
+            System.out.println("Dealer value: " + DealerValue);
+        }
+        if(PlayerValue == 0){
+            System.out.println("Player busts!");
+        }
+        else{
+            System.out.println("Player value: " + PlayerValue);
+        }
+    
+        
         if(DealerValue>PlayerValue){
+            System.out.println("Dealer Wins! You lose $" + bet);
             money = money - bet;
         }
         else if(PlayerValue>DealerValue){
+            System.out.println("Player Wins! You gain $" + bet);
             money = money + bet;
         }
         else{
+            System.out.println("It's a tie!");
             money = money;
         }
         
+        
+        Ceelo(money);
+        return money;
     }
     
 
