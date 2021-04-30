@@ -728,14 +728,14 @@ public class CMPSC390GroupProject {
             //checks for 4-5-6 roll 2x payout
             else if(PlayerDie1 == 4 && PlayerDie2 == 5 && PlayerDie3 == 6){
                 System.out.println("You Win! 4-5-6 was rolled: 2x payout");
-                money = money + bet;
+                money = money + (bet*2);
                 System.out.println("Total Money: $" + money);
                 end = true;
                 break;
             }
             else if(PlayerDie1 == 4 && PlayerDie2 == 6 && PlayerDie3 == 5){
                 System.out.println("You Win! 4-5-6 was rolled: 2x payout");
-                money = money + bet;
+                money = money + (bet*2);
                 System.out.println("Total Money: $" + money);
                 end = true;
                 break;
