@@ -900,6 +900,7 @@ public class Casino
         int bet = 0;
         int option;
         Boolean canPlay = false;
+        Boolean end = false;
         
         do{
             //home page 
@@ -911,12 +912,12 @@ public class Casino
             
             //option select
             if(option == 1){
-                System.out.println("Total Money: " + money);
+                System.out.println("Total Money: $" + money);
                 System.out.println("Place your bet");
                 bet = scnr.nextInt();
                 while(bet > money || bet < 1){
                     System.out.println("Invalid  Value. Select a value greater than one and less than or equal to your total money");
-                    System.out.println("Total Money: " + money);
+                    System.out.println("Total Money: $" + money);
                     bet = scnr.nextInt();
                 }
                 canPlay = true;
@@ -929,7 +930,7 @@ public class Casino
                 System.out.println("They will have up to three chances to the roll a hand");
                 System.out.println("A hand is a pair and a single");
                 System.out.println("The point value is the single. If there is no hand, then the point value is zero");
-                System.out.println("The rolls will automatically done for you ans displayed each time.");
+                System.out.println("The rolls will automatically done for you and displayed each time.");
                 System.out.println("In order to win, the player's value must be higher than the dealer's value");
                 System.out.println("The payout is one to one meaning that your bet will be matched");
                 System.out.println("The minimum bet is $1");
@@ -977,7 +978,6 @@ public class Casino
         }
         
         //Player dice and value
-        System.out.println("Player's Roll");
         int PlayerDie1;
         int PlayerDie2;
         int PlayerDie3;
@@ -991,7 +991,108 @@ public class Casino
             PlayerDie3 = rnd.nextInt(6) + 1;
             System.out.println(PlayerDie1 + " " + PlayerDie2 + " " + PlayerDie3);
             
-            if(PlayerDie1==PlayerDie2){
+            //cheacks for 1-1-1 roll 5x payout
+            if(PlayerDie1 == 1 && PlayerDie2 == 1 && PlayerDie3 == 1){
+                System.out.println("You Win! 1-1-1 was rolled: 5x payout");
+                money = money + (bet*5);
+                System.out.println("Total Money: $" + money);
+                end = true;
+                break;
+            }
+            //checks for triple roll 3x payout
+            else if(PlayerDie1 == PlayerDie2 && PlayerDie2 == PlayerDie3){
+                System.out.println("You Win! A triple was rolled: 3x payout");
+                money = money + (bet*3);
+                System.out.println("Total Money: $" + money);
+                end = true;
+                break;
+            }
+            //checks for 4-5-6 roll 2x payout
+            else if(PlayerDie1 == 4 && PlayerDie2 == 5 && PlayerDie3 == 6){
+                System.out.println("You Win! 4-5-6 was rolled: 2x payout");
+                money = money + (bet*2);
+                System.out.println("Total Money: $" + money);
+                end = true;
+                break;
+            }
+            else if(PlayerDie1 == 4 && PlayerDie2 == 6 && PlayerDie3 == 5){
+                System.out.println("You Win! 4-5-6 was rolled: 2x payout");
+                money = money + (bet*2);
+                System.out.println("Total Money: $" + money);
+                end = true;
+                break;
+            }
+            else if(PlayerDie1 == 5 && PlayerDie2 == 4 && PlayerDie3 == 6){
+                System.out.println("You Win! 4-5-6 was rolled: 2x payout");
+                money = money + (bet*2);
+                System.out.println("Total Money: $" + money);
+                end = true;
+                break;
+            }
+            else if(PlayerDie1 == 5 && PlayerDie2 == 6 && PlayerDie3 == 4){
+                System.out.println("You Win! 4-5-6 was rolled: 2x payout");
+                money = money + (bet*2);
+                System.out.println("Total Money: $" + money);
+                end = true;
+                break;
+            }
+            else if(PlayerDie1 == 6 && PlayerDie2 == 4 && PlayerDie3 == 5){
+                System.out.println("You Win! 4-5-6 was rolled: 2x payout");
+                money = money + (bet*2);
+                System.out.println("Total Money: $" + money);
+                end = true;
+                break;
+            }else if(PlayerDie1 == 6 && PlayerDie2 == 5 && PlayerDie3 == 4){
+                System.out.println("You Win! 4-5-6 was rolled: 2x payout");
+                money = money + (bet*2);
+                System.out.println("Total Money: $" + money);
+                end = true;
+                break;
+            }
+            //checks for 1-2-3 roll -2x payout
+            else if(PlayerDie1 == 1 && PlayerDie2 == 2 && PlayerDie3 == 3){
+                System.out.println("You Lose! 1-2-3 was rolled: 2x loss");
+                money = money - (bet*2);
+                System.out.println("Total Money: $" + money);
+                end = true;
+                break;
+            }
+            else if(PlayerDie1 == 1 && PlayerDie2 == 3 && PlayerDie3 == 2){
+                System.out.println("You Lose! 1-2-3 was rolled: 2x loss");
+                money = money - (bet*2);
+                System.out.println("Total Money: $" + money);
+                end = true;
+                break;
+            }
+            else if(PlayerDie1 == 2 && PlayerDie2 == 1 && PlayerDie3 == 3){
+                System.out.println("You Lose! 1-2-3 was rolled: 2x loss");
+                money = money - (bet*2);
+                System.out.println("Total Money: $" + money);
+                end = true;
+                break;
+            }
+            else if(PlayerDie1 == 2 && PlayerDie2 == 3 && PlayerDie3 == 1){
+                System.out.println("You Lose! 1-2-3 was rolled: 2x loss");
+                money = money - (bet*2);
+                System.out.println("Total Money: $" + money);
+                end = true;
+                break;
+            }
+            else if(PlayerDie1 == 3 && PlayerDie2 == 1 && PlayerDie3 == 2){
+                System.out.println("You Lose! 1-2-3 was rolled: 2x loss");
+                money = money - (bet*2);
+                System.out.println("Total Money: $" + money);
+                end = true;
+                break;
+            }else if(PlayerDie1 == 3 && PlayerDie2 == 2 && PlayerDie3 == 1){
+                System.out.println("You Lose! 1-2-3 was rolled: 2x loss");
+                money = money - (bet*2);
+                System.out.println("Total Money: $" + money);
+                end = true;
+                break;
+            }
+            //checks for a player value
+            else if(PlayerDie1==PlayerDie2){
                 PlayerValue = PlayerDie3;
                 break;
             }
@@ -1008,34 +1109,33 @@ public class Casino
             }
         }
         
-        //results
-        if(DealerValue == 0){
-            System.out.println("Dealer busts!");
+        //results if no special roll was triggered
+        while(end == false){
+            if(DealerValue>PlayerValue){
+                System.out.println("Dealer's point value: " + DealerValue);
+                System.out.println("Player's point value: " + PlayerValue);
+                money = money - bet;
+                System.out.println("You Lose! Dealer's point value was greater");
+                System.out.println("Total Money: $" + money);
+                end = true;
+            }
+            else if(PlayerValue>DealerValue){
+                System.out.println("Dealer's point value: " + DealerValue);
+                System.out.println("Player's point value: " + PlayerValue);
+                money = money + bet;
+                System.out.println("You Win! Your point value was greater");
+                System.out.println("Total Money: $" + money);
+                end = true;
+            }
+            else{
+                System.out.println("Dealer's point value: " + DealerValue);
+                System.out.println("Player's point value: " + PlayerValue);
+                money = money;
+                System.out.println("Draw. Point values were equal");
+                System.out.println("Total Money: $" + money);
+                end = true;
+            }
         }
-        else{
-            System.out.println("Dealer value: " + DealerValue);
-        }
-        if(PlayerValue == 0){
-            System.out.println("Player busts!");
-        }
-        else{
-            System.out.println("Player value: " + PlayerValue);
-        }
-    
-        
-        if(DealerValue>PlayerValue){
-            System.out.println("Dealer Wins! You lose $" + bet);
-            money = money - bet;
-        }
-        else if(PlayerValue>DealerValue){
-            System.out.println("Player Wins! You gain $" + bet);
-            money = money + bet;
-        }
-        else{
-            System.out.println("It's a tie!");
-            money = money;
-        }
-        
         
         Ceelo(money);
         return money;
