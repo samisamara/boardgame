@@ -31,7 +31,7 @@ public class Casino
         System.out.println("Money: $" + money);
 
         boolean quit = false;
-        while (quit == false || money<=0) {
+        while (quit == false || money > 0) {
             System.out.println("Please choose a game:");
             System.out.println(">1. [ Blackjack ]");
             System.out.println(">2. [ Baccarat ]");
@@ -740,7 +740,7 @@ public class Casino
             System.out.println("Total money after playing: $" + money);
         }
         // this if statement only functions when the player beats the dealer normally
-        if ((player < 21) && (dealer > player) && (dealer < 21)) {
+        if ((player < 21) && (dealer > player) && (dealer <= 21)) {
             System.out.println("Dealer's value was greater. You lose");
             System.out.println("Total money before playing: $" + money);
             System.out.println("Your bet: " + bet);
@@ -881,7 +881,7 @@ public class Casino
         } //checks if lose 
         else {
             System.out.println("Dice Roll: " + tot);
-            bet = bet * 10;
+            bet = bet;
             System.out.println("YOU LOSE: $" + bet);
             if(bet>=mon){
                 mon = 0.0;
