@@ -31,7 +31,7 @@ public class Casino
         System.out.println("Money: $" + money);
 
         boolean quit = false;
-        while (quit == false || money > 0) {
+        while (quit == false && money > 0) {
             System.out.println("Please choose a game:");
             System.out.println(">1. [ Blackjack ]");
             System.out.println(">2. [ Baccarat ]");
