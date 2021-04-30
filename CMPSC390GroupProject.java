@@ -712,7 +712,7 @@ public class CMPSC390GroupProject {
             //cheacks for 1-1-1 roll 5x payout
             if(PlayerDie1 == 1 && PlayerDie2 == 1 && PlayerDie3 == 1){
                 System.out.println("You Win! 1-1-1 was rolled: 5x payout");
-                money = money + (bet*4);
+                money = money + (bet*5);
                 System.out.println("Total Money: $" + money);
                 end = true;
                 break;
@@ -720,7 +720,7 @@ public class CMPSC390GroupProject {
             //checks for triple roll 3x payout
             else if(PlayerDie1 == PlayerDie2 && PlayerDie2 == PlayerDie3){
                 System.out.println("You Win! A triple was rolled: 3x payout");
-                money = money + (bet*2);
+                money = money + (bet*3);
                 System.out.println("Total Money: $" + money);
                 end = true;
                 break;
@@ -742,27 +742,27 @@ public class CMPSC390GroupProject {
             }
             else if(PlayerDie1 == 5 && PlayerDie2 == 4 && PlayerDie3 == 6){
                 System.out.println("You Win! 4-5-6 was rolled: 2x payout");
-                money = money + bet;
+                money = money + (bet*2);
                 System.out.println("Total Money: $" + money);
                 end = true;
                 break;
             }
             else if(PlayerDie1 == 5 && PlayerDie2 == 6 && PlayerDie3 == 4){
                 System.out.println("You Win! 4-5-6 was rolled: 2x payout");
-                money = money + bet;
+                money = money + (bet*2);
                 System.out.println("Total Money: $" + money);
                 end = true;
                 break;
             }
             else if(PlayerDie1 == 6 && PlayerDie2 == 4 && PlayerDie3 == 5){
                 System.out.println("You Win! 4-5-6 was rolled: 2x payout");
-                money = money + bet;
+                money = money + (bet*2);
                 System.out.println("Total Money: $" + money);
                 end = true;
                 break;
             }else if(PlayerDie1 == 6 && PlayerDie2 == 5 && PlayerDie3 == 4){
                 System.out.println("You Win! 4-5-6 was rolled: 2x payout");
-                money = money + bet;
+                money = money + (bet*2);
                 System.out.println("Total Money: $" + money);
                 end = true;
                 break;
